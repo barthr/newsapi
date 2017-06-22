@@ -7,11 +7,16 @@ import (
 	"time"
 )
 
+// ArticleParameters are the parameters used for the newsapi article endpoint
+// Source must always contain a value
+// See https://newsapi.org/#apiArticles for more information on the required parameters
 type ArticleParameters struct {
 	Source string `url:"source,omitempty"`
 	SortBy string `url:"sortBy,omitempty"`
 }
 
+// Article is a single article from the newsapi article response
+// See https://newsapi.org/#apiArticles for more details on the property's
 type Article struct {
 	Author      string    `json:"author"`
 	Title       string    `json:"title"`
@@ -21,6 +26,9 @@ type Article struct {
 	PublishedAt time.Time `json:"publishedAt"`
 }
 
+// ArticleResponse is the response from the newsapi article endpoint
+// Code and Message property will be filled when an error happened
+// See https://newsapi.org/#apiArticles for more details on the property's
 type ArticleResponse struct {
 	Status   string    `json:"status"`
 	Code     string    `json:"code,omitempty"`
@@ -30,6 +38,9 @@ type ArticleResponse struct {
 	Articles []Article `json:"articles"`
 }
 
+// GetArticles returns the articles from newsapi
+// See https://newsapi.org/#apiArticles for more information
+// It will return the error from newsapi if there is an error
 func (c *Client) GetArticles(params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
 	u := "articles"
 
