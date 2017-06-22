@@ -1,4 +1,6 @@
-<div style="text-align:center"><img src ="logo.png" /></div>
+<p align="center">
+    <img src ="logo.png"></img>
+</p>
 
 # NewsAPI Go Client
 
