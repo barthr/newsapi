@@ -18,7 +18,7 @@ const (
 type Client struct {
 	client *http.Client // HTTP client used to communicate with the API.
 	// Base URL for API requests
-	BaseURL *url.URL
+	baseURL *url.URL
 	// Api Key used with requests to NewsAPI.
 	apiKey string
 	// User agent used when communicating with the NewsAPI API.
@@ -37,7 +37,8 @@ func WithHttpClient(client *http.Client) OptionFunc {
 func NewClient(apiKey string, options ...OptionFunc) *Client {
 	baseURL, _ := url.Parse(defaultBaseURL)
 	c := &Client{
-		BaseURL: baseURL,
+		client:  http.DefaultClient,
+		baseURL: baseURL,
 		apiKey:  apiKey,
 	}
 
@@ -55,7 +56,7 @@ func (c *Client) NewGetRequest(URLStr string) (*http.Request, error) {
 		return nil, err
 	}
 
-	u := c.BaseURL.ResolveReference(rel)
+	u := c.baseURL.ResolveReference(rel)
 
 	// Create a new get request with the url provided
 	req, err := http.NewRequest("GET", u.String(), nil)
