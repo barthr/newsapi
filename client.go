@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/google/go-querystring/query"
 )
@@ -37,7 +38,9 @@ func WithHttpClient(client *http.Client) OptionFunc {
 func NewClient(apiKey string, options ...OptionFunc) *Client {
 	baseURL, _ := url.Parse(defaultBaseURL)
 	c := &Client{
-		client:  http.DefaultClient,
+		client: &http.Client{
+			Timeout: time.Second * 10,
+		},
 		baseURL: baseURL,
 		apiKey:  apiKey,
 	}
