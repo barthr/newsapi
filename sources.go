@@ -2,12 +2,14 @@ package newsapi
 
 import "net/http"
 
+// SourceParameters are the parameters which can be used in the source request to newsapi
 type SourceParameters struct {
 	Category string `url:"category,omitempty"`
 	Language string `url:"language,omitempty"`
 	Country  string `url:"country,omitempty"`
 }
 
+// Source is a source from newsapi it contains all the information provided by the api
 type Source struct {
 	ID          string `json:"id"`
 	Name        string `json:"name"`
@@ -24,11 +26,13 @@ type Source struct {
 	SortBysAvailable []string `json:"sortBysAvailable"`
 }
 
+// SourceResponse is the response from the source request
 type SourceResponse struct {
 	Status  string   `json:"status"`
 	Sources []Source `json:"sources"`
 }
 
+// GetSources returns the sources from newsapi see https://newsapi.org/#apiSources for more information on the parameters
 func (c *Client) GetSources(params *SourceParameters) (*SourceResponse, *http.Response, error) {
 	u := "sources"
 
