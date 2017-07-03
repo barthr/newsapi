@@ -87,12 +87,6 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*htt
 	resp, err := c.client.Do(req)
 
 	if err != nil {
-		select {
-		case <-ctx.Done():
-			return nil, ctx.Err()
-		default:
-		}
-
 		return resp, err
 	}
 
