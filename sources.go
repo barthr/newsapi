@@ -1,6 +1,9 @@
 package newsapi
 
-import "net/http"
+import (
+	"context"
+	"net/http"
+)
 
 // SourceParameters are the parameters which can be used in the source request to newsapi
 type SourceParameters struct {
@@ -33,7 +36,7 @@ type SourceResponse struct {
 }
 
 // GetSources returns the sources from newsapi see https://newsapi.org/#apiSources for more information on the parameters
-func (c *Client) GetSources(params *SourceParameters) (*SourceResponse, *http.Response, error) {
+func (c *Client) GetSources(ctx context.Context, params *SourceParameters) (*SourceResponse, *http.Response, error) {
 	u := "sources"
 
 	if params != nil {
@@ -52,7 +55,7 @@ func (c *Client) GetSources(params *SourceParameters) (*SourceResponse, *http.Re
 
 	var response *SourceResponse
 
-	resp, err := c.Do(req, &response)
+	resp, err := c.Do(ctx, req, &response)
 
 	if err != nil {
 		return nil, nil, err
