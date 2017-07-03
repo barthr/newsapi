@@ -52,9 +52,9 @@ func NewClient(apiKey string, options ...OptionFunc) *Client {
 	return c
 }
 
-// NewGetRequest returns a new Get request for the given url URLStr
+// newGetRequest returns a new Get request for the given url URLStr
 // It returns a pointer to a http request which can be executed by a http.client
-func (c *Client) NewGetRequest(URLStr string) (*http.Request, error) {
+func (c *Client) newGetRequest(URLStr string) (*http.Request, error) {
 	rel, err := url.Parse(URLStr)
 	if err != nil {
 		return nil, err
@@ -78,10 +78,10 @@ func (c *Client) NewGetRequest(URLStr string) (*http.Request, error) {
 	return req, nil
 }
 
-// Do executes the http.Request and marshal's the response into v
+// do executes the http.Request and marshal's the response into v
 // v must be a pointer to a value instead of a regular value
 // It returns the actual response from the request and also an error
-func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*http.Response, error) {
+func (c *Client) do(ctx context.Context, req *http.Request, v interface{}) (*http.Response, error) {
 	req = req.WithContext(ctx)
 
 	resp, err := c.client.Do(req)

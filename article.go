@@ -58,14 +58,14 @@ func (c *Client) GetArticles(ctx context.Context, params *ArticleParameters) (*A
 		}
 	}
 
-	req, err := c.NewGetRequest(u)
+	req, err := c.newGetRequest(u)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	var response *ArticleResponse
 
-	resp, err := c.Do(ctx, req, &response)
+	resp, err := c.do(ctx, req, &response)
 
 	if err != nil {
 		return nil, nil, err

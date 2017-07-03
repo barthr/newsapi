@@ -48,14 +48,14 @@ func (c *Client) GetSources(ctx context.Context, params *SourceParameters) (*Sou
 		}
 	}
 
-	req, err := c.NewGetRequest(u)
+	req, err := c.newGetRequest(u)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	var response *SourceResponse
 
-	resp, err := c.Do(ctx, req, &response)
+	resp, err := c.do(ctx, req, &response)
 
 	if err != nil {
 		return nil, nil, err
