@@ -1,6 +1,7 @@
 package newsapi
 
 import (
+	"context"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -80,10 +81,18 @@ func (c *Client) NewGetRequest(URLStr string) (*http.Request, error) {
 // Do executes the http.Request and marshal's the response into v
 // v must be a pointer to a value instead of a regular value
 // It returns the actual response from the request and also an error
-func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
+func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*http.Response, error) {
+	req = req.WithContext(ctx)
+
 	resp, err := c.client.Do(req)
 
 	if err != nil {
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+		}
+
 		return resp, err
 	}
 
