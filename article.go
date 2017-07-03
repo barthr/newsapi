@@ -1,6 +1,7 @@
 package newsapi
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"net/http"
@@ -41,7 +42,7 @@ type ArticleResponse struct {
 // GetArticles returns the articles from newsapi
 // See https://newsapi.org/#apiArticles for more information
 // It will return the error from newsapi if there is an error
-func (c *Client) GetArticles(params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
+func (c *Client) GetArticles(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
 	u := "articles"
 
 	if params == nil || params.Source == "" {
@@ -64,7 +65,7 @@ func (c *Client) GetArticles(params *ArticleParameters) (*ArticleResponse, *http
 
 	var response *ArticleResponse
 
-	resp, err := c.Do(req, &response)
+	resp, err := c.Do(ctx, req, &response)
 
 	if err != nil {
 		return nil, nil, err
