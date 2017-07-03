@@ -30,14 +30,14 @@ package main
 import (
 	"fmt"
 	"net/http"
-
+	"context"
 	"github.com/barthr/newsapi"
 )
 
 func main() {
 	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
 
-	sources, _, err := c.GetSources(nil)
+	sources, _, err := c.GetSources(context.Background(), nil)
 
 	if err != nil {
 		panic(err)
@@ -57,6 +57,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"context"
 
 	"github.com/barthr/newsapi"
 )
@@ -64,7 +65,7 @@ import (
 func main() {
 	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
 
-	sources, _, err := c.GetSources(&newsapi.SourceParameters{
+	sources, _, err := c.GetSources(context.Background(), &newsapi.SourceParameters{
 		Country: "gb",
 	})
 
@@ -86,6 +87,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"context"
 
 	"github.com/barthr/newsapi"
 )
@@ -93,7 +95,7 @@ import (
 func main() {
 	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
 
-	articles, _, err := c.GetArticles(&newsapi.ArticleParameters{
+	articles, _, err := c.GetArticles(context.Background(), &newsapi.ArticleParameters{
 		Source: "the-next-web",
 	})
 
