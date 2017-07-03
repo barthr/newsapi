@@ -12,52 +12,104 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
 ```
 go get github.com/barthr/newsapi
 ```
 
 Next up register for free at (https://newsapi.org/register) get yourself a free api key and keep it somewhere save.
 
-### Installing
 
-A step by step series of examples that tell you have to get a development env running
+## Examples
 
-Say what the step will be
+### Retrieving all the sources
 
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/barthr/newsapi"
+)
+
+func main() {
+	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
+
+	sources, _, err := c.GetSources(nil)
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, s := range sources.Sources {
+		fmt.Println(s.Description)
+	}
+}
 ```
-Give the example
+
+### Retrieving all the sources for a specific country (Great britian in this case)
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/barthr/newsapi"
+)
+
+func main() {
+	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
+
+	sources, _, err := c.GetSources(&newsapi.SourceParameters{
+		Country: "gb",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, s := range sources.Sources {
+		fmt.Println(s.Name)
+	}
+}
 ```
 
-And repeat
+### Retrieving all the articles for a specific source (the next web in this case)
 
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/barthr/newsapi"
+)
+
+func main() {
+	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
+
+	articles, _, err := c.GetArticles(&newsapi.ArticleParameters{
+		Source: "the-next-web",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, s := range articles.Articles {
+		fmt.Printf("%+v\n\n", s)
+	}
+}
 ```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-```
-go tests ./...
-```
-
-## Built With
-
-* Love
-* Go
-
-
-## Authors
-
-* **Bart Fokker** - *Initial work* - [barthr](https://github.com/barthr)
 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License
 
 ## Acknowledgments
 
