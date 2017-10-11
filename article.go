@@ -12,19 +12,20 @@ import (
 // Source must always contain a value
 // See http://beta.newsapi.org/docs for more information on the required parameters
 type ArticleParameters struct {
-	Sources  []string `url:"sources,omitempty,comma"`
-  Domains  []string `url:"domains,omitempty,comma"`
-	Keywords string   `url:"q,omitempty"`
-  Category string   `url:"category,omitempty"`
-  Language string   `url:"language,omitempty"`
-  SortBy   string   `url:"sortBy,omitempty"`
-  Page     int      `url:"page,omitempty"`
+	Sources []string `url:"sources,omitempty,comma"`
+	Domains []string `url:"domains,omitempty,comma"`
+
+	Keywords string `url:"q,omitempty"`
+	Category string `url:"category,omitempty"`
+	Language string `url:"language,omitempty"`
+	SortBy   string `url:"sortBy,omitempty"`
+	Page     int    `url:"page,omitempty"`
 }
 
 // Article is a single article from the newsapi article response
 // See http://beta.newsapi.org/docs for more details on the property's
 type Article struct {
-  Source      Source    `json:"source"`
+	Source      Source    `json:"source"`
 	Author      string    `json:"author"`
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
@@ -39,7 +40,7 @@ type Article struct {
 type ArticleResponse struct {
 	Status   string    `json:"status"`
 	Code     string    `json:"code,omitempty"`
-  Message  string    `json:"message,omitempty"`
+	Message  string    `json:"message,omitempty"`
 	Articles []Article `json:"articles"`
 }
 
@@ -56,7 +57,6 @@ func (c *Client) GetTopHeadlines(ctx context.Context, params *ArticleParameters)
 func (c *Client) GetEverything(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
 	return c.getArticles("everything", ctx, params)
 }
-
 
 // GetArticles returns the articles from newsapi
 // See http://beta.newsapi.org/docs for more information
