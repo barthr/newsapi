@@ -13,7 +13,7 @@ import (
 
 const (
 	apiKeyHeader   = "X-Api-Key"
-	defaultBaseURL = "https://newsapi.org/v1/"
+	defaultBaseURL = "http://beta.newsapi.org/v2/"
 )
 
 // A Client manages communication with the NewsAPI API.
