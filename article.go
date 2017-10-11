@@ -10,15 +10,21 @@ import (
 
 // ArticleParameters are the parameters used for the newsapi article endpoint
 // Source must always contain a value
-// See https://newsapi.org/#apiArticles for more information on the required parameters
+// See http://beta.newsapi.org/docs for more information on the required parameters
 type ArticleParameters struct {
-	Source string `url:"source,omitempty"`
-	SortBy string `url:"sortBy,omitempty"`
+	Sources  []string `url:"sources,omitempty,comma"`
+  Domains  []string `url:"domains,omitempty,comma"`
+	Keywords string   `url:"q,omitempty"`
+  Category string   `url:"category,omitempty"`
+  Language string   `url:"language,omitempty"`
+  SortBy   string   `url:"sortBy,omitempty"`
+  Page     int      `url:"page,omitempty"`
 }
 
 // Article is a single article from the newsapi article response
-// See https://newsapi.org/#apiArticles for more details on the property's
+// See http://beta.newsapi.org/docs for more details on the property's
 type Article struct {
+  Source      Source    `json:"source"`
 	Author      string    `json:"author"`
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
@@ -29,24 +35,35 @@ type Article struct {
 
 // ArticleResponse is the response from the newsapi article endpoint
 // Code and Message property will be filled when an error happened
-// See https://newsapi.org/#apiArticles for more details on the property's
+// See http://beta.newsapi.org/docs for more details on the property's
 type ArticleResponse struct {
 	Status   string    `json:"status"`
 	Code     string    `json:"code,omitempty"`
-	Message  string    `json:"message,omitempty"`
-	Source   string    `json:"source"`
-	SortBy   string    `json:"sortBy"`
+  Message  string    `json:"message,omitempty"`
 	Articles []Article `json:"articles"`
 }
 
-// GetArticles returns the articles from newsapi
-// See https://newsapi.org/#apiArticles for more information
+// GetTopHeadlines returns the articles from newsapi
+// See http://beta.newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
-func (c *Client) GetArticles(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
-	u := "articles"
+func (c *Client) GetTopHeadlines(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
+	return c.getArticles("top-headlines", ctx, params)
+}
 
-	if params == nil || params.Source == "" {
-		return nil, nil, errors.New("empty source not possible when asking for articles")
+// GetEverything returns the articles from newsapi
+// See http://beta.newsapi.org/docs for more information
+// It will return the error from newsapi if there is an error
+func (c *Client) GetEverything(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
+	return c.getArticles("everything", ctx, params)
+}
+
+
+// GetArticles returns the articles from newsapi
+// See http://beta.newsapi.org/docs for more information
+// It will return the error from newsapi if there is an error
+func (c *Client) getArticles(u string, ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
+	if params == nil {
+		return nil, nil, errors.New("empty parameters not possible when asking for articles")
 	}
 
 	if params != nil {

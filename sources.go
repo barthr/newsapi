@@ -25,8 +25,7 @@ type Source struct {
 		Small  string `json:"small"`
 		Medium string `json:"medium"`
 		Large  string `json:"large"`
-	} `json:"urlsToLogos"`
-	SortBysAvailable []string `json:"sortBysAvailable"`
+  } `json:"urlsToLogos"`
 }
 
 // SourceResponse is the response from the source request
@@ -35,7 +34,7 @@ type SourceResponse struct {
 	Sources []Source `json:"sources"`
 }
 
-// GetSources returns the sources from newsapi see https://newsapi.org/#apiSources for more information on the parameters
+// GetSources returns the sources from newsapi see http://beta.newsapi.org/docs for more information on the parameters
 func (c *Client) GetSources(ctx context.Context, params *SourceParameters) (*SourceResponse, *http.Response, error) {
 	u := "sources"
 

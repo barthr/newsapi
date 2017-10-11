@@ -79,7 +79,7 @@ func main() {
 }
 ```
 
-### Retrieving all the articles for a specific source (the next web in this case)
+### Retrieving the top headlines
 
 ```go
 package main
@@ -95,8 +95,38 @@ import (
 func main() {
 	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
 
-	articles, _, err := c.GetArticles(context.Background(), &newsapi.ArticleParameters{
-		Source: "the-next-web",
+	articles, _, err := c.GetTopHeadlines(context.Background(), &newsapi.ArticleParameters{
+		Sources: []string{ "cnn", "time" },
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, s := range articles.Articles {
+		fmt.Printf("%+v\n\n", s)
+	}
+}
+```
+
+### Retrieving all the articles
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"context"
+
+	"github.com/barthr/newsapi"
+)
+
+func main() {
+	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
+
+	articles, _, err := c.GetEverything(context.Background(), &newsapi.ArticleParameters{
+		Sources: []string{ "cnn", "time" },
 	})
 
 	if err != nil {
