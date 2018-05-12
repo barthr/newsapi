@@ -13,7 +13,7 @@ import (
 
 const (
 	apiKeyHeader   = "X-Api-Key"
-	defaultBaseURL = "http://beta.newsapi.org/v2/"
+	defaultBaseURL = "https://newsapi.org/v2/"
 )
 
 // A Client manages communication with the NewsAPI API.
@@ -27,9 +27,11 @@ type Client struct {
 	UserAgent string
 }
 
+// OptionFunc is function which modifies the client
 type OptionFunc func(*Client)
 
-func WithHttpClient(client *http.Client) OptionFunc {
+// WithHTTPClient sets the http client to use when making requests.
+func WithHTTPClient(client *http.Client) OptionFunc {
 	return func(c *Client) {
 		c.client = client
 	}

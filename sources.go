@@ -25,7 +25,7 @@ type Source struct {
 		Small  string `json:"small"`
 		Medium string `json:"medium"`
 		Large  string `json:"large"`
-  } `json:"urlsToLogos"`
+	} `json:"urlsToLogos"`
 }
 
 // SourceResponse is the response from the source request

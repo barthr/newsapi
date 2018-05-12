@@ -35,7 +35,7 @@ import (
 )
 
 func main() {
-	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
+	c := newsapi.NewClient("<API KEY>", newsapi.WithHTTPClient(http.DefaultClient))
 
 	sources, _, err := c.GetSources(context.Background(), nil)
 
@@ -63,7 +63,7 @@ import (
 )
 
 func main() {
-	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
+	c := newsapi.NewClient("<API KEY>", newsapi.WithHTTPClient(http.DefaultClient))
 
 	sources, _, err := c.GetSources(context.Background(), &newsapi.SourceParameters{
 		Country: "gb",
@@ -93,7 +93,7 @@ import (
 )
 
 func main() {
-	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
+	c := newsapi.NewClient("<API KEY>", newsapi.WithHTTPClient(http.DefaultClient))
 
 	articles, _, err := c.GetTopHeadlines(context.Background(), &newsapi.ArticleParameters{
 		Sources: []string{ "cnn", "time" },
@@ -123,7 +123,7 @@ import (
 )
 
 func main() {
-	c := newsapi.NewClient("<API KEY>", newsapi.WithHttpClient(http.DefaultClient))
+	c := newsapi.NewClient("<API KEY>", newsapi.WithHTTPClient(http.DefaultClient))
 
 	articles, _, err := c.GetEverything(context.Background(), &newsapi.ArticleParameters{
 		Sources: []string{ "cnn", "time" },

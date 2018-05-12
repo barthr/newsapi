@@ -38,10 +38,11 @@ type Article struct {
 // Code and Message property will be filled when an error happened
 // See http://beta.newsapi.org/docs for more details on the property's
 type ArticleResponse struct {
-	Status   string    `json:"status"`
-	Code     string    `json:"code,omitempty"`
-	Message  string    `json:"message,omitempty"`
-	Articles []Article `json:"articles"`
+	Status       string    `json:"status"`
+	TotalResults int       `json:"totalResults"`
+	Code         string    `json:"code,omitempty"`
+	Message      string    `json:"message,omitempty"`
+	Articles     []Article `json:"articles"`
 }
 
 // GetTopHeadlines returns the articles from newsapi
