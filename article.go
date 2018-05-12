@@ -49,20 +49,20 @@ type ArticleResponse struct {
 // See http://beta.newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
 func (c *Client) GetTopHeadlines(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
-	return c.getArticles("top-headlines", ctx, params)
+	return c.getArticles(ctx, "top-headlines", params)
 }
 
 // GetEverything returns the articles from newsapi
 // See http://beta.newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
 func (c *Client) GetEverything(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
-	return c.getArticles("everything", ctx, params)
+	return c.getArticles(ctx, "everything", params)
 }
 
 // GetArticles returns the articles from newsapi
 // See http://beta.newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
-func (c *Client) getArticles(u string, ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
+func (c *Client) getArticles(ctx context.Context, u string, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
 	if params == nil {
 		return nil, nil, errors.New("empty parameters not possible when asking for articles")
 	}
