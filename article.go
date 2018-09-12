@@ -10,7 +10,7 @@ import (
 
 // ArticleParameters are the parameters used for the newsapi article endpoint
 // Source must always contain a value
-// See http://beta.newsapi.org/docs for more information on the required parameters
+// See http://newsapi.org/docs for more information on the required parameters
 type ArticleParameters struct {
 	Sources []string `url:"sources,omitempty,comma"`
 	Domains []string `url:"domains,omitempty,comma"`
@@ -46,21 +46,21 @@ type ArticleResponse struct {
 }
 
 // GetTopHeadlines returns the articles from newsapi
-// See http://beta.newsapi.org/docs for more information
+// See http://newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
 func (c *Client) GetTopHeadlines(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
 	return c.getArticles(ctx, "top-headlines", params)
 }
 
 // GetEverything returns the articles from newsapi
-// See http://beta.newsapi.org/docs for more information
+// See http://newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
 func (c *Client) GetEverything(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
 	return c.getArticles(ctx, "everything", params)
 }
 
 // GetArticles returns the articles from newsapi
-// See http://beta.newsapi.org/docs for more information
+// See http://newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
 func (c *Client) getArticles(ctx context.Context, u string, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
 	if params == nil {
