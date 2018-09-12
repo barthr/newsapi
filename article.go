@@ -20,6 +20,9 @@ type ArticleParameters struct {
 	Language string `url:"language,omitempty"`
 	SortBy   string `url:"sortBy,omitempty"`
 	Page     int    `url:"page,omitempty"`
+
+	From time.Time `url:"from,omitempty"`
+	To   time.Time `url:"to,omitempty"`
 }
 
 // Article is a single article from the newsapi article response
