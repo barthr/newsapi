@@ -3,26 +3,34 @@ package newsapi
 import (
 	"context"
 	"errors"
-	"fmt"
-	"net/http"
 	"time"
 )
 
-// ArticleParameters are the parameters used for the newsapi article endpoint
-// Source must always contain a value
-// See http://newsapi.org/docs for more information on the required parameters
-type ArticleParameters struct {
-	Sources []string `url:"sources,omitempty,comma"`
-	Domains []string `url:"domains,omitempty,comma"`
+// TopHeadlineParameters are the parameters which can be used to tweak to request for the top headlines.
+type TopHeadlineParameters struct {
+	Country  string   `url:"country,omitempty"`
+	Category string   `url:"category,omitempty"`
+	Sources  []string `url:"sources,omitempty,comma"`
+	Keywords string   `url:"q,omitempty"`
+	Page     int      `url:"page,omitempty"`
+	PageSize int      `url:"pageSize,omitempty"`
+}
 
-	Keywords string `url:"q,omitempty"`
-	Category string `url:"category,omitempty"`
-	Language string `url:"language,omitempty"`
-	SortBy   string `url:"sortBy,omitempty"`
-	Page     int    `url:"page,omitempty"`
+// EverythingParameters are the parameters used for the newsapi everything endpoint.
+type EverythingParameters struct {
+	Keywords       string   `url:"q,omitempty"`
+	Sources        []string `url:"sources,omitempty,comma"`
+	Domains        []string `url:"domains,omitempty,comma"`
+	ExcludeDomains []string `url:"excludeDomains,omitempty"`
 
 	From time.Time `url:"from,omitempty"`
 	To   time.Time `url:"to,omitempty"`
+
+	Language string `url:"language,omitempty"`
+	SortBy   string `url:"sortBy,omitempty"`
+
+	Page     int `url:"page,omitempty"`
+	PageSize int `url:"pageSize,omitempty"`
 }
 
 // Article is a single article from the newsapi article response
@@ -35,39 +43,38 @@ type Article struct {
 	URL         string    `json:"url"`
 	URLToImage  string    `json:"urlToImage"`
 	PublishedAt time.Time `json:"publishedAt"`
+	Content     string    `json:"content"`
 }
 
-// ArticleResponse is the response from the newsapi article endpoint
-// Code and Message property will be filled when an error happened
-// See http://beta.newsapi.org/docs for more details on the property's
+// ArticleResponse is the response from the newsapi article endpoint.
+// Code and Message property will be filled when an error happened.
+// See http://beta.newsapi.org/docs for more details on the property's.
 type ArticleResponse struct {
 	Status       string    `json:"status"`
 	TotalResults int       `json:"totalResults"`
-	Code         string    `json:"code,omitempty"`
-	Message      string    `json:"message,omitempty"`
 	Articles     []Article `json:"articles"`
 }
 
 // GetTopHeadlines returns the articles from newsapi
 // See http://newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
-func (c *Client) GetTopHeadlines(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
+func (c *Client) GetTopHeadlines(ctx context.Context, params *TopHeadlineParameters) (*ArticleResponse, error) {
 	return c.getArticles(ctx, "top-headlines", params)
 }
 
 // GetEverything returns the articles from newsapi
 // See http://newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
-func (c *Client) GetEverything(ctx context.Context, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
+func (c *Client) GetEverything(ctx context.Context, params *EverythingParameters) (*ArticleResponse, error) {
 	return c.getArticles(ctx, "everything", params)
 }
 
 // GetArticles returns the articles from newsapi
 // See http://newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
-func (c *Client) getArticles(ctx context.Context, u string, params *ArticleParameters) (*ArticleResponse, *http.Response, error) {
+func (c *Client) getArticles(ctx context.Context, u string, params interface{}) (*ArticleResponse, error) {
 	if params == nil {
-		return nil, nil, errors.New("empty parameters not possible when asking for articles")
+		return nil, errors.New("empty parameters not possible when asking for articles")
 	}
 
 	if params != nil {
@@ -75,26 +82,29 @@ func (c *Client) getArticles(ctx context.Context, u string, params *ArticleParam
 		u, err = setOptions(u, params)
 
 		if err != nil {
-			return nil, nil, err
+			return nil, err
 		}
 	}
 
 	req, err := c.newGetRequest(u)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
-	var response *ArticleResponse
+	var response = struct {
+		*Error
+		*ArticleResponse
+	}{}
 
-	resp, err := c.do(ctx, req, &response)
+	_, err = c.do(ctx, req, &response)
 
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 
-	if response.Code != "" {
-		return nil, nil, fmt.Errorf("[%s] %s", response.Code, response.Message)
+	if response.Error != nil {
+		return nil, response.Error
 	}
 
-	return response, resp, nil
+	return response.ArticleResponse, nil
 }
