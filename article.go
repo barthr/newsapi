@@ -38,7 +38,7 @@ type EverythingParameters struct {
 }
 
 // Article is a single article from the newsapi article response
-// See http://beta.newsapi.org/docs for more details on the property's
+// See http://newsapi.org/docs for more details on the property's
 type Article struct {
 	Source      Source    `json:"source"`
 	Author      string    `json:"author"`
