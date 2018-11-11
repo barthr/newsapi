@@ -6,6 +6,10 @@ import (
 	"time"
 )
 
+var (
+	errNilParams = errors.New("empty parameters not possible when asking for articles")
+)
+
 // TopHeadlineParameters are the parameters which can be used to tweak to request for the top headlines.
 type TopHeadlineParameters struct {
 	Country  string   `url:"country,omitempty"`
@@ -48,7 +52,7 @@ type Article struct {
 
 // ArticleResponse is the response from the newsapi article endpoint.
 // Code and Message property will be filled when an error happened.
-// See http://beta.newsapi.org/docs for more details on the property's.
+// See http://newsapi.org/docs for more details on the property's.
 type ArticleResponse struct {
 	Status       string    `json:"status"`
 	TotalResults int       `json:"totalResults"`
@@ -74,7 +78,7 @@ func (c *Client) GetEverything(ctx context.Context, params *EverythingParameters
 // It will return the error from newsapi if there is an error
 func (c *Client) getArticles(ctx context.Context, u string, params interface{}) (*ArticleResponse, error) {
 	if params == nil {
-		return nil, errors.New("empty parameters not possible when asking for articles")
+		return nil, errNilParams
 	}
 
 	if params != nil {

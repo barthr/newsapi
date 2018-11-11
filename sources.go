@@ -33,7 +33,7 @@ type SourceResponse struct {
 	Sources []Source `json:"sources"`
 }
 
-// GetSources returns the sources from newsapi see http://beta.newsapi.org/docs for more information on the parameters
+// GetSources returns the sources from newsapi see http://newsapi.org/docs for more information on the parameters
 func (c *Client) GetSources(ctx context.Context, params *SourceParameters) (*SourceResponse, error) {
 	u := "sources"
 
