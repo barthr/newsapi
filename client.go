@@ -87,6 +87,9 @@ func (c *Client) do(ctx context.Context, req *http.Request, v interface{}) (*htt
 	req = req.WithContext(ctx)
 
 	resp, err := c.client.Do(req)
+	if ctx.Err() != nil {
+		return nil, ctx.Err()
+	}
 
 	if err != nil {
 		return resp, err
