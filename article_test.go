@@ -4,8 +4,8 @@ import (
 	"testing"
 )
 
-func TestClientGetTopHeadlines(t *testing.T) {
+func TestClient_GetTopHeadlines(t *testing.T) {
 }
 
-func TestClientGetEverything(t *testing.T) {
+func TestClient_GetEverything(t *testing.T) {
 }
