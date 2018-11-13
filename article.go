@@ -63,14 +63,14 @@ type ArticleResponse struct {
 // See http://newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
 func (c *Client) GetTopHeadlines(ctx context.Context, params *TopHeadlineParameters) (*ArticleResponse, error) {
-	return c.getArticles(ctx, "top-headlines", params)
+	return c.getArticles(ctx, topHeadlinesEndpoint, params)
 }
 
 // GetEverything returns the articles from newsapi
 // See http://newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
 func (c *Client) GetEverything(ctx context.Context, params *EverythingParameters) (*ArticleResponse, error) {
-	return c.getArticles(ctx, "everything", params)
+	return c.getArticles(ctx, everythingEndpoint, params)
 }
 
 // GetArticles returns the articles from newsapi

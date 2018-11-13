@@ -35,7 +35,7 @@ type SourceResponse struct {
 
 // GetSources returns the sources from newsapi see http://newsapi.org/docs for more information on the parameters
 func (c *Client) GetSources(ctx context.Context, params *SourceParameters) (*SourceResponse, error) {
-	u := "sources"
+	u := sourcesEndpoint
 
 	if params != nil {
 		var err error

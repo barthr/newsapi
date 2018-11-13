@@ -21,9 +21,8 @@ func setup() (client *Client, mux *http.ServeMux, serverURL string, teardown fun
 
 	// client is the GitHub client being tested and is
 	// configured to use test server.
-	client = NewClient("")
 	url, _ := url.Parse(server.URL + defaultBaseURL + "/")
-	client.baseURL = url
+	client = NewClient("", WithBaseURL(url))
 
 	return client, mux, server.URL, server.Close
 }

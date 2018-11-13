@@ -16,6 +16,10 @@ import (
 const (
 	apiKeyHeader   = "X-Api-Key"
 	defaultBaseURL = "https://newsapi.org/v2/"
+
+	sourcesEndpoint      = "sources"
+	topHeadlinesEndpoint = "top-headlines"
+	everythingEndpoint   = "everything"
 )
 
 // A Client manages communication with the NewsAPI API.
