@@ -1,3 +1,5 @@
+// Package newsapi provides helper functions to query https://newsapi.org
+// The api maps the responses to appropriate go structs and include all of the possible options
 package newsapi
 
 import (
@@ -24,7 +26,7 @@ type Client struct {
 	// Api Key used with requests to NewsAPI.
 	apiKey string
 	// User agent used when communicating with the NewsAPI API.
-	UserAgent string
+	userAgent string
 }
 
 // OptionFunc is function which modifies the client
@@ -37,6 +39,20 @@ func WithHTTPClient(client *http.Client) OptionFunc {
 	}
 }
 
+// WithBaseURL sets the baseurl for the newsapi
+func WithBaseURL(url *url.URL) OptionFunc {
+	return func(c *Client) {
+		c.baseURL = url
+	}
+}
+
+// WithUserAgent sets the user agent of the client to userAgent
+func WithUserAgent(userAgent string) OptionFunc {
+	return func(c *Client) {
+		c.userAgent = userAgent
+	}
+}
+
 // NewClient returns a new newsapi client to query the newsapi API.
 func NewClient(apiKey string, options ...OptionFunc) *Client {
 	baseURL, _ := url.Parse(defaultBaseURL)
@@ -44,8 +60,9 @@ func NewClient(apiKey string, options ...OptionFunc) *Client {
 		client: &http.Client{
 			Timeout: time.Second * 10,
 		},
-		baseURL: baseURL,
-		apiKey:  apiKey,
+		baseURL:   baseURL,
+		apiKey:    apiKey,
+		userAgent: "github.com/barthr/newsapi",
 	}
 
 	for _, opt := range options {
@@ -74,8 +91,8 @@ func (c *Client) newGetRequest(URLStr string) (*http.Request, error) {
 	req.Header.Set(apiKeyHeader, c.apiKey)
 
 	// If we specify a user agent we override the current one
-	if c.UserAgent != "" {
-		req.Header.Set("User-Agent", c.UserAgent)
+	if c.userAgent != "" {
+		req.Header.Set("User-Agent", c.userAgent)
 	}
 	return req, nil
 }
