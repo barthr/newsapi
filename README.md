@@ -40,7 +40,7 @@ import (
 func main() {
 	c := newsapi.NewClient("<API KEY>", newsapi.WithHTTPClient(http.DefaultClient))
 
-	sources, _, err := c.GetSources(context.Background(), nil)
+	sources, err := c.GetSources(context.Background(), nil)
 
 	if err != nil {
 		panic(err)
