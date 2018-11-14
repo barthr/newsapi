@@ -77,10 +77,6 @@ func (c *Client) GetEverything(ctx context.Context, params *EverythingParameters
 // See http://newsapi.org/docs for more information
 // It will return the error from newsapi if there is an error
 func (c *Client) getArticles(ctx context.Context, u string, params interface{}) (*ArticleResponse, error) {
-	if params == nil {
-		return nil, errNilParams
-	}
-
 	if params != nil {
 		var err error
 		u, err = setOptions(u, params)

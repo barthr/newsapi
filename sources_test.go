@@ -30,7 +30,7 @@ func TestClient_GetSourcesWithFailure(t *testing.T) {
 		t.Errorf("expected message to be equal to error but got %s", err.(*Error).Message)
 	}
 	if response != nil {
-		t.Error("expected equal to nil")
+		t.Error("expected response to be equal to nil")
 	}
 }
 

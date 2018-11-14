@@ -42,3 +42,10 @@ func TestClient_WithUserAgent(t *testing.T) {
 		t.Errorf("expected user agent to be set to %s but got %s", userAgent, client.userAgent)
 	}
 }
+
+func TestClient_WithHTTPClient(t *testing.T) {
+	client := NewClient("", WithHTTPClient(nil))
+	if client.client != nil {
+		t.Errorf("expected http client set to nil but got %v", client.client)
+	}
+}
