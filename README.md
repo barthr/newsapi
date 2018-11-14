@@ -4,7 +4,9 @@
 
 # NewsAPI Go Client
 
-[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](http://godoc.org/github.com/barthr/newsapi)    
+[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](http://godoc.org/github.com/barthr/newsapi) [![Build Status](https://travis-ci.org/barthr/newsapi.svg?branch=master)](https://travis-ci.org/barthr/newsapi) [![codecov](https://codecov.io/gh/barthr/newsapi/branch/master/graph/badge.svg)](https://codecov.io/gh/barthr/newsapi)
+
+   
 Go client for communicating with the newsapi api.
 
 ## Getting Started
