@@ -49,3 +49,22 @@ func TestClient_WithHTTPClient(t *testing.T) {
 		t.Errorf("expected http client set to nil but got %v", client.client)
 	}
 }
+
+func TestNewGetRequestHeaders(t *testing.T) {
+	userAgent := "hello"
+	apiKey := "goodbye"
+	c := NewClient(apiKey, WithUserAgent(userAgent))
+	req, err := c.newGetRequest("$^_dfa0s9dfas/failure###/$$/##https://")
+	if err != nil {
+		t.Errorf("expected error to be equal to nil but got %v", err)
+	}
+	if req == nil {
+		t.Error("expected request to be created")
+	}
+	if req.Header.Get("User-Agent") != userAgent {
+		t.Errorf("expected user agent to be equal to %s but got %s", userAgent, req.Header.Get("User-Agent"))
+	}
+	if req.Header.Get(apiKeyHeader) != apiKey {
+		t.Errorf("expected api key header to be equal to %s but got %s", apiKey, req.Header.Get(apiKeyHeader))
+	}
+}

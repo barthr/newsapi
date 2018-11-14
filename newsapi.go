@@ -14,8 +14,9 @@ import (
 )
 
 const (
-	apiKeyHeader   = "X-Api-Key"
-	defaultBaseURL = "https://newsapi.org/v2/"
+	apiKeyHeader    = "X-Api-Key"
+	userAgentHeader = "User-Agent"
+	defaultBaseURL  = "https://newsapi.org/v2/"
 
 	sourcesEndpoint      = "sources"
 	topHeadlinesEndpoint = "top-headlines"
@@ -96,7 +97,7 @@ func (c *Client) newGetRequest(URLStr string) (*http.Request, error) {
 
 	// If we specify a user agent we override the current one
 	if c.userAgent != "" {
-		req.Header.Set("User-Agent", c.userAgent)
+		req.Header.Set(userAgentHeader, c.userAgent)
 	}
 	return req, nil
 }
