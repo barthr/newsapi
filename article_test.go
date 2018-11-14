@@ -50,7 +50,7 @@ func TestClient_GetTopHeadlinesWithParams(t *testing.T) {
 		})
 	})
 
-	client.GetTopHeadlines(context.Background(), &TopHeadlineParameters{
+	_, _ = client.GetTopHeadlines(context.Background(), &TopHeadlineParameters{
 		Category: "a",
 		Country:  "b",
 		Page:     10,

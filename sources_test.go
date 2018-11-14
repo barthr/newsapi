@@ -50,7 +50,7 @@ func TestClient_GetSourcesWithParams(t *testing.T) {
 		})
 	})
 
-	client.GetSources(context.Background(), &SourceParameters{
+	_, _ = client.GetSources(context.Background(), &SourceParameters{
 		Category: "a",
 		Country:  "b",
 		Language: "c",

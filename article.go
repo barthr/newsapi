@@ -2,12 +2,7 @@ package newsapi
 
 import (
 	"context"
-	"errors"
 	"time"
-)
-
-var (
-	errNilParams = errors.New("empty parameters not possible when asking for articles")
 )
 
 // TopHeadlineParameters are the parameters which can be used to tweak to request for the top headlines.
