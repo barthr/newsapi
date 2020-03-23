@@ -8,7 +8,7 @@
 [![Golangci](https://golangci.com/badges/github.com/barthr/newsapi.svg)](https://golangci.com/r/github.com/barthr/newsapi)
 
    
-Go client for communicating with the newsapi api.
+Go client for communicating with the newsapi's api.
 
 ## Getting Started
 
@@ -20,12 +20,12 @@ These instructions will get you a copy of the project up and running on your loc
 go get github.com/barthr/newsapi
 ```
 
-Next up register for free at (https://newsapi.org/register) get yourself a free api key and keep it somewhere save.
+Next, register for free at (https://newsapi.org/register), get yourself a free api key and keep it somewhere safe.
 
 
 ## Examples
 
-### Retrieving all the sources
+### Retrieving all sources
 
 ```go
 package main
@@ -52,7 +52,7 @@ func main() {
 }
 ```
 
-### Retrieving all the sources for a specific country (Great britian in this case)
+### Retrieving all sources for a specific country (Great Britain in this case)
 
 ```go
 package main
@@ -82,7 +82,7 @@ func main() {
 }
 ```
 
-### Retrieving the top headlines
+### Retrieving top headlines
 
 ```go
 package main
@@ -112,7 +112,7 @@ func main() {
 }
 ```
 
-### Retrieving all the articles
+### Retrieving all articles
 
 ```go
 package main
@@ -149,4 +149,4 @@ This project is licensed under the MIT License
 
 ## Acknowledgments
 
-* Inspiration from github golang client
+* Inspired by github golang client
