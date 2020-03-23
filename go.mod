@@ -1,4 +1,4 @@
-module github.com/barthr/newsapi
+module github.com/barthr/newsapi/v2
 
 go 1.11
 
